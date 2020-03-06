@@ -9,7 +9,7 @@ const mongoose = require('mongoose'); // This is useful for database manipulatio
 const app = express();
 
 // connecting to db, it will create it if it does not exist
-mongoose.connect('mongodb://localhost:27017/CreditCardManager', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb+srv://lalbricenov:CXP0aXvrcW3Qq0k1@cluster0-wn3z1.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true})
     .then(db => console.log('Db connected'))
     .catch(err=> console.log(err));
 // ------------------------------------------------------------------------------------------------
