@@ -1,0 +1,101 @@
+<%- include('../partials/header'); %>
+
+<style>
+    #cardsContainer{
+        grid-area:cards;
+        display:grid;
+        grid-template-columns: repeat(auto-fill,300px);
+        grid-gap: 10px;
+    }
+    .autoHide{
+      position:fixed;
+      top: 0;
+      width: 400px;
+      /* left: 50px; */
+      animation-name: hiding;
+      animation-timing-function: ease-in;
+      animation-duration:5s;
+      animation-fill-mode: forwards;
+      animation-iteration-count:1;
+    }
+    @keyframes hiding {
+      0% {opacity:1;}
+      50% {opacity:1;}
+      100%{opacity:0;}
+    }
+</style>
+<script>
+  let elemsToHide = document.getElementsByClassName("autoHide");
+  setTimeout(function() {    
+    for(elem of elemsToHide)
+      elem.style.display = "none";
+}, 5000);
+</script>
+<% if(message != '') {%>
+<div class="alert alert-success autoHide" role="alert">
+ <%= message%>
+</div>
+<% }%>
+
+<style>
+  .creditCard{
+    border:solid 1px;
+    border-color:lightgray;
+    border-radius: 10px;
+    /* background-color: lightcyan; */
+  }
+  .creditCard:hover{
+    border-width:3px ;
+  }
+  .creditCardImage {
+  width: 100%;
+  height: auto;
+  }
+  .noFormatLink, .noFormatLink:hover{
+    color:black;
+    text-decoration: none;
+  }
+  .centered{
+    text-align: center;
+  }
+
+
+</style>
+<!-- include('../../static/js/creditCard.ejs'); -->
+ <!-- console.log(document)  -->
+
+<script src="static/js/creditCard.js"></script>
+<script src="static/images/chart.js"></script>
+
+
+<div id="cardsContainer">
+  <% for(let i = 0; i < cards.length; i++) { let card = cards[i]%>
+    <a href="card/<%=card._id%>" class="noFormatLink">
+      <div class="creditCard" style="padding:5px">
+        <div id="cardN<%=i%>" >
+          
+        </div>
+        <div class="card-body" >
+          <div id="piechart<%=i%>" style="width: 100%;"></div>
+          <script>createPieChart("piechart<%=i%>",
+          { values:["<%= (card.cupoTotal-card.deudaTotal > 0)? card.cupoTotal-card.deudaTotal : 0;%>", "<%=card.deudaTotal%>"],
+            labels:["Disponible", "Deuda total"]})</script>
+          <h3 class="centered">Cupo total <br><%=moneyFormatter.format(card.cupoTotal)%></h3>
+        </div>
+      </div>
+    </a>
+    <script>
+      // console.log(createCreditCard);
+      createCreditCard("<%=card.banco%>", "<%=card.franquicia%>", "<%=card.lastFour%>", "<%=card.color%>", "<%=card.fecha%>", "<%=card.nameOnCard%>", "cardN"+"<%=i%>");
+    </script>    
+    
+  <% } %>
+</div>
+
+
+
+<!-- <script src="static/js/creditCard.js"></script> -->
+
+
+
+<%- include('../partials/footer'); %>

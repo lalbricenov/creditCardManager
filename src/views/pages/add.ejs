@@ -1,0 +1,98 @@
+<%- include('../partials/header'); %>
+<style>
+.cardForm{
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+  "svgContainer"
+  "forma";
+}
+@media (min-width: 900px) {
+ /* For large displays the image will be on the right of the form */
+  .cardForm{
+    display:grid;
+    grid-template-columns: 1fr minmax(500px, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+    "forma svgContainer";
+  }
+}
+
+/* For displays smaller than 1600px wide the image will be on top of the form */
+
+  .cardForm>form{
+    grid-area: forma;
+  }
+  .cardForm>div{
+    grid-area: svgContainer;
+    padding: 15px;
+    align-self: center;
+  }
+  .creditCardImage{
+    /* align-self: center; */
+    width:100%;
+    height: 100%;
+  }
+</style>
+
+<div class="cardForm">
+  <form action="add" method="post" id="formForCardN1">
+    <div class="form-group">
+      <label for="banco">Banco</label>
+      <input type="text" class="form-control" id="banco" name="banco" required>
+    </div>
+    <div class="form-group">
+      <label for="franquicia">Franquicia</label>
+      <select class="form-control" id="franquicia" name="franquicia" required>
+        <option>Visa</option>
+        <option>MasterCard</option>
+        <option>American Express</option>
+        <option>Diners Club</option>
+        <option>Otra</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="lastFour">Últimos 4 dígitos</label>
+      <input type="text" class="form-control" id="lastFour" name="lastFour" required>
+    </div>
+    <div class="form-group">
+      <label for="validThru">Válida hasta</label>
+      <input type="month" class="form-control" id="validThru" name="validThru"
+        min="2020-01" max="2050-12" value="2022-05" required>
+    </div>
+    <div class="form-group">
+      <label for="nameOnCard">Nombre en la tarjeta</label>
+      <input type="text" class="form-control" id="nameOnCard" name="nameOnCard" placeholder="John Doe" required>
+    </div>
+    <div class="form-group">
+      <label for="cupoTotal">Cupo total</label>
+      <input type="number" class="form-control" min="0.00" step="0.01" name="cupoTotal" required/>
+    </div>
+    <div class="form-group">
+      <label for="deudaTotal">Deuda total</label>
+      <input type="number" class="form-control" min="0.00" step="0.01" name="deudaTotal" required/>
+    </div>
+    <div class="form-group">
+      <label for="cardColor">Color</label>
+      <input type="color" class="form-control" id="cardColor" name="color">
+    </div>
+    <div class="form-group">
+      <label for="nota">Nota</label>
+      <input type="text" class="form-control" id="nota" name="nota" placeholder="Información adicional">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Añadir</button>
+  </form>
+  <div id="cardN1">
+
+  </div>
+</div>
+
+<script src="static/js/creditCard.js"></script>
+<script src="static/js/requiredAsterisk.js"></script>
+<script>
+  createCreditCard("Banco", "Visa", "0000", "#000000", "99/99", "John Doe", "cardN1");
+  addEventListenersOnFieldsUpdate();
+</script>
+<%- include('../partials/footer'); %>
