@@ -3,6 +3,7 @@ const router = express.Router();
 const sanitize = require('mongo-sanitize');
 
 const CreditCard = require('../models/creditCard'); // This model will be used to create new credit cards
+const User = require('../models/user');
 
 // const Transaction = require('../models/transaction.js');
 
@@ -62,12 +63,67 @@ router.get('/card/:cardId', function(req, res){
         }else{
             console.log(card);
             res.send(req.params);
+        }        
+    });    
+})
+router.get('/register', function(req, res){
+    res.render('pages/register.ejs');
+})
+router.post('/register', function(req, res){
+    // console.log(req.body);
+    if (req.body.email && req.body.username &&req.body.password &&req.body.passwordConf) {
+        if(req.body.password == req.body.passwordConf)
+        {
+            let userData = {
+                email: req.body.email,
+                username: req.body.username,
+                password: req.body.password,
+              }
+              //use schema.create to insert data into the db
+              let user = new User(userData);
+              console.log("Aqui" + user);
+              user.save(userData, function (err, user) {
+                if (err) {
+                  return res.send(err);//next(err)
+                } else {
+                  return res.send(user);
+                }
+            });
         }
-        
-    });
+        else{
+            res.send("No coinciden las contraseñas")        ;
+        }
+      }
+      else{
+        res.send("Campos incompletos o un error ocurió")
+      }
     
+});
+router.get('/login', function(req, res){
+    console.log("Aqui")
+    res.render('pages/login.ejs');
+})
+router.post('/login', function(req, res){
+    if (req.body.email &&
+        req.body.password) {
+        var userData = {
+          email: req.body.email,
+          password: req.body.password,
+        }
+        //use schema.create to insert data into the db
+        User.create(userData, function (err, user) {
+          if (err) {
+            return res.redirect('/profile');
+          } else {
+            return res.redirect('/profile');
+          }
+        });
+      }
+    console.log("Aqui");
+    res.render('pages/login.ejs');
 })
 
-
-
+router.get('/profile', function(req, res){
+    res.send("Profile");
+})
 module.exports = router;

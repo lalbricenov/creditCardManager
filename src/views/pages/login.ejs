@@ -1,0 +1,51 @@
+
+<%- include('../partials/headerWONav'); %>
+
+<style>
+#loginContainer{
+    display: grid;
+    grid-template-columns: minmax(190px,460px);
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+#formForCardN1{
+    display: grid;
+    /* justify-items: center; */
+    border: solid 2px lightgray;
+    border-radius: 5px;
+    padding:8px;
+}
+.infoInForm{
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+
+</style>
+<div id="loginContainer">
+
+    <form action="login" method="post" id="formForCardN1">
+        <div class="infoInForm">
+            <h2>CCManager</h2>
+            <h4>Iniciar sesión</h4>
+        </div>
+        <div class="fieldsInForm">
+            <div class="form-group">
+            <label for="email">Email
+            </label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+            <label for="password">Contraseña
+            </label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </div>
+      </form>
+</div>
+
+
+  </div>
